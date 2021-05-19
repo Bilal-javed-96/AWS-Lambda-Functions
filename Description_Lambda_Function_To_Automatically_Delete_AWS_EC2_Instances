@@ -1,6 +1,6 @@
-##Lambda_Function_To_Automatically_Delete_AWS_EC2_Instances
+Lambda_Function_To_Automatically_Delete_AWS_EC2_Instances
 
-##Steps to configure this Lambda Function
+Steps to configure this Lambda Function
 This Lambda Function is use to delete all running and stopped EC2 instances in AWS. Following steps can be performed to configure lambda function.
 
 1. Create a Lambda function (Python)
