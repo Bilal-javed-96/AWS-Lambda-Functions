@@ -13,8 +13,7 @@ This Lambda Function is use to delete all running and stopped EC2 instances in A
 5. cron expression for this will be (* 0/3 * * ? *)))
 6. you are good to go.
 
-## 2) Lambda_Fu
-nction_To_Automatically_Delete_AWS_EBS_Volume
+## 2) Lambda_Function_To_Automatically_Delete_AWS_EBS_Volume
 
 ### Steps to configure this Lambda Function
 
