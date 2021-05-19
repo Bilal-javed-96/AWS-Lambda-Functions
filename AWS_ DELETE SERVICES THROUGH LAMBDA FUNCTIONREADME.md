@@ -12,3 +12,18 @@ This Lambda Function is use to delete all running and stopped EC2 instances in A
 4. create a cloud watch Event trigger so it can be triggered periodically (i have configure it to be executed after every 3 hours with cron expression  
 5. cron expression for this will be (* 0/3 * * ? *)))
 6. you are good to go.
+
+## 2) Lambda_Fu
+nction_To_Automatically_Delete_AWS_EBS_Volume
+
+### Steps to configure this Lambda Function
+
+This lambda function is used to  delete all running ebs volumes that are not attached to any other services. 
+following are the steps to configure lambda function for EBS Volume.
+
+1. Create a Lambda function (Python)
+2. Copy the code
+3. Set timeout setting of lambda function to 15 seconds
+4. create a cloud watch Event trigger so it can be triggered periodically 
+6. you are good to go.
+
