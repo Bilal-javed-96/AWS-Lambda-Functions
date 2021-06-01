@@ -1,0 +1,36 @@
+import boto3
+import json
+
+def lambda_handler(event,context):
+                                                              
+    regions=['us-east-1','us-east-2','us-west-1','us-west-2','af-south-1','ap-east-1','ap-south-1','ap-northeast-3','ap-northeast-2',
+            'ap-southeast-1','ap-southeast-2','ap-northeast-1','ca-central-1','eu-central-1','eu-west-1','eu-west-2','eu-west-3',
+            'eu-south-1','eu-north-1','me-south-1','sa-east']
+                                                              #regions = in regions where your instances are deployed
+    for j in regions:                                         #loop,so that code will be executed in regions defined in regions list
+        instances = []                                        #instance ids will be appended in this list
+        ec2 = boto3.client('ec2',region_name=j)
+        response = ec2.describe_instances()
+        for reservation in response["Reservations"]:
+            for instance in reservation["Instances"]:
+                if instance['State']['Name'] != 'terminating': #Condition for excluding terminated instances
+                    #print(instance["InstanceId"])
+                    instances.append(instance["InstanceId"])  
+                    #print(instances)
+            ec2.terminate_instances(InstanceIds=instances)     #terminating instances
+        
+        
+        myAccount = boto3.client('sts').get_caller_identity()['Account']
+        snapshots = ec2.describe_snapshots(MaxResults=1000, OwnerIds=[myAccount])['Snapshots']
+        
+        images = ec2.describe_images(Owners=['self'])['Images'] #delete images start
+  
+        for i in range(len(images)):
+            #print(images[i]['ImageId'])
+            ec2.deregister_image(ImageId=images[i]['ImageId'])
+            #print(ImageId)                                      #delete images end
+  
+  
+        for snapshot in snapshots:                               #delete snapshots
+            Snapshotid=snapshot['SnapshotId']
+            snap = ec2.delete_snapshot(SnapshotId=Snapshotid)
